@@ -1,4 +1,6 @@
 
+using CandidateHub.Api.Presentation.Extensions;
+
 namespace CandidateHub.Api
 {
     public class Program
@@ -6,16 +8,11 @@ namespace CandidateHub.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.EnableSwagger();
 
             var app = builder.Build();
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.ApplySwagger(builder.Environment);
+
             app.Run();
         }
     }
