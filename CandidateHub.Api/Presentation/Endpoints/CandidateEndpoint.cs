@@ -25,7 +25,7 @@ namespace CandidateHub.Api.Presentation.Endpoints
             {
                 var validationResult = validator.Validate(request);
                 if (!validationResult.IsValid)
-                    return Results.BadRequest(validationResult.Errors.Select(x => x.ErrorMessage));
+                    return Results.BadRequest(validationResult.Errors.Select(x => x.ErrorMessage).First());
 
                 await candidateService.CreateOrUpdateCandidate(request);
                 return Results.Ok();
