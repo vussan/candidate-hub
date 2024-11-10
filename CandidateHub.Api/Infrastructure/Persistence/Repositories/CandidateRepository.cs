@@ -17,12 +17,14 @@ namespace CandidateHub.Api.Infrastructure.Persistence.Repositories
         public async Task<Candidate> Create(Candidate candidate)
         {
             await _context.Candidates.AddAsync(candidate);
+            await _context.SaveChangesAsync();
             return candidate;
         }
-        public Task<Candidate> Update(Candidate candidate)
+        public async Task<Candidate> Update(Candidate candidate)
         {
             _context.Candidates.Update(candidate);
-            return Task.FromResult(candidate);
+            await _context.SaveChangesAsync();
+            return candidate;
         }
     }
 }
