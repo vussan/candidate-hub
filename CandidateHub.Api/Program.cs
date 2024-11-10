@@ -8,6 +8,7 @@ namespace CandidateHub.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDatabase(builder.Configuration);
             builder.Services.EnableSwagger();
 
             var app = builder.Build();
