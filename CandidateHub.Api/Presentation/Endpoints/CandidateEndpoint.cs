@@ -1,6 +1,7 @@
 ﻿using CandidateHub.Api.Application.DTOs;
 using CandidateHub.Api.Core.Abstractions.Services;
 using Carter;
+using FluentValidation;
 
 namespace CandidateHub.Api.Presentation.Endpoints
 {
@@ -12,16 +13,21 @@ namespace CandidateHub.Api.Presentation.Endpoints
         }
         public override void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/", async (ICandidateService _candidateService) =>
+            app.MapGet("/", async (ICandidateService candidateService) =>
             {
-                return await _candidateService.GetAll();
+                return await candidateService.GetAll();
             });
 
             app.MapPost("/", async (
-                ICandidateService _candidateService,
+                IValidator<CreateCandidateDTO> validator,
+                ICandidateService candidateService,
                 CreateCandidateDTO request) =>
             {
-                await _candidateService.CreateOrUpdateCandidate(request);
+                var validationResult = validator.Validate(request);
+                if (!validationResult.IsValid)
+                    return Results.BadRequest(validationResult.Errors.Select(x => x.ErrorMessage));
+
+                await candidateService.CreateOrUpdateCandidate(request);
                 return Results.Ok();
             });
         }

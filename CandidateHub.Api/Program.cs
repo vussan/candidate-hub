@@ -1,6 +1,7 @@
 
 using CandidateHub.Api.Presentation.Extensions;
 using Carter;
+using FluentValidation;
 
 namespace CandidateHub.Api
 {
@@ -12,6 +13,7 @@ namespace CandidateHub.Api
             builder.Services.AddDatabase(builder.Configuration);
             builder.Services.AddDependencies();
             builder.Services.EnableSwagger();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
             builder.Services.AddCarter();
 
             var app = builder.Build();
