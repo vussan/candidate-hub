@@ -18,6 +18,7 @@ namespace CandidateHub.Api
             builder.Services.AddCarter();
 
             var app = builder.Build();
+            app.ApplyMigrations(builder.Environment);
             app.ApplySwagger(builder.Environment);
             app.MapCarter();
 
