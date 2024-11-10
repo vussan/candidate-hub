@@ -1,11 +1,12 @@
-﻿using CandidateHub.Api.Application.Abstractions.Repositories;
+﻿using CandidateHub.Api.Application.Abstractions;
+using CandidateHub.Api.Application.Abstractions.Repositories;
 using CandidateHub.Api.Application.DTOs;
 using CandidateHub.Api.Core.Abstractions.Services;
 using CandidateHub.Api.Core.Entities;
 
 namespace CandidateHub.Api.Application.Concretes.Services
 {
-    public class CandidateService(ICandidateRepository _candidateRepository) : ICandidateService
+    public class CandidateService(ICandidateRepository _candidateRepository, IUnitOfWork _unitOfWork) : ICandidateService
     {
         public async Task<IEnumerable<CandidateDTO>> GetAll()
         {
@@ -56,6 +57,8 @@ namespace CandidateHub.Api.Application.Concretes.Services
                 };
                 await _candidateRepository.Create(candidate);
             }
+
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }
