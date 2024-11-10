@@ -31,6 +31,9 @@ namespace CandidateHub.Api.Infrastructure.Persistence.EntityConfigurations
 
             builder.Property(p => p.Comment)
                    .HasMaxLength(1000);
+
+            builder.HasIndex(p => p.Email)
+                .IsUnique();
         }
     }
 }
