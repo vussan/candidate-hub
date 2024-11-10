@@ -11,6 +11,7 @@ namespace CandidateHub.Api
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDatabase(builder.Configuration);
+            builder.Services.AddMemoryCache();
             builder.Services.AddDependencies();
             builder.Services.EnableSwagger();
             builder.Services.AddValidatorsFromAssemblyContaining<Program>();
